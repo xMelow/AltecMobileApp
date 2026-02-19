@@ -16,7 +16,7 @@ import com.example.altecprint.model.Label
 @Composable
 fun LabelScreen(
     labels: List<Label>,
-    onLabelClick: () -> Unit,
+    onLabelClick: (Label) -> Unit,
     modifier: Modifier = Modifier
     ) {
     LazyColumn(
@@ -38,11 +38,11 @@ fun LabelScreen(
 @Composable
 fun LabelCard(
     label: Label,
-    onLabelClick: () -> Unit,
+    onLabelClick: (Label) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
-        onClick = onLabelClick,
+        onClick = { onLabelClick(label) },
         modifier = modifier
     ) {
         Text(

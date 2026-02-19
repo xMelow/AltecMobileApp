@@ -3,7 +3,6 @@ package com.example.altecprint
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -17,13 +16,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.altecprint.ui.screens.LabelScreen
+import com.example.altecprint.ui.screens.PrintLabelScreen
 
 enum class AltecScreen() {
     Labels,
@@ -59,7 +58,15 @@ fun AltecApp(
             composable(route = AltecScreen.Labels.name) {
                 LabelScreen(
                     labels = uiState.labels,
-                    onLabelClick = { navController.navigate(AltecScreen.PrintLabel.name) }
+                    onLabelClick = {
+                        viewModel.setLabel(it)
+                        navController.navigate(AltecScreen.PrintLabel.name)
+                    }
+                )
+            }
+            composable(route = AltecScreen.PrintLabel.name) {
+                PrintLabelScreen(
+                    label = uiState.selectedLabel,
                 )
             }
         }
