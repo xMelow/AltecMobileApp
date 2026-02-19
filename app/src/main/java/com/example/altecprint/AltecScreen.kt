@@ -59,7 +59,7 @@ fun AltecApp(
             composable(route = AltecScreen.Labels.name) {
                 LabelScreen(
                     labels = uiState.labels,
-                    onLabelClick = {}
+                    onLabelClick = { navController.navigate(AltecScreen.PrintLabel.name) }
                 )
             }
         }
