@@ -57,6 +57,6 @@ fun LabelCard(
 private fun LabelCardPreview() {
     LabelCard(
         onLabelClick = {},
-        label = Label("test", "exmaple tspl")
+        label = Label("test", listOf("example tspl"))
     )
 }

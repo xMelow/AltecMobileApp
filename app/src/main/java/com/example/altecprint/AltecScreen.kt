@@ -67,6 +67,7 @@ fun AltecApp(
             composable(route = AltecScreen.PrintLabel.name) {
                 PrintLabelScreen(
                     label = uiState.selectedLabel,
+                    onPrintButtonClicked = { viewModel.printLabel(uiState.selectedLabel) }
                 )
             }
         }
