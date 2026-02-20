@@ -13,4 +13,9 @@ fun PrintLabelScreen(
     Text(
         text = label?.name ?: "no label selected"
     )
+
+    // foreach input field in input fields
+
+    // input field for amount
+    // button for printing
 }

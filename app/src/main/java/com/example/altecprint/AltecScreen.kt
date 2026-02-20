@@ -21,6 +21,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.altecprint.data.DataSource
 import com.example.altecprint.ui.screens.LabelScreen
 import com.example.altecprint.ui.screens.PrintLabelScreen
 
@@ -35,10 +36,9 @@ fun AltecApp(
     navController: NavHostController = rememberNavController()
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
-    val currentScreen = AltecScreen.valueOf(
+    val currentScreen = AltecScreen.valueOf (
         backStackEntry?.destination?.route ?: AltecScreen.Labels.name
     )
-
     Scaffold(
         topBar = {
             AltecAppBar(
@@ -57,7 +57,7 @@ fun AltecApp(
         ) {
             composable(route = AltecScreen.Labels.name) {
                 LabelScreen(
-                    labels = uiState.labels,
+                    labels = DataSource.labels,
                     onLabelClick = {
                         viewModel.setLabel(it)
                         navController.navigate(AltecScreen.PrintLabel.name)
