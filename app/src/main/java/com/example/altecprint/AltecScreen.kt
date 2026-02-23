@@ -23,12 +23,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.altecprint.data.DataSource
+import com.example.altecprint.ui.screens.BasProgramScreen
 import com.example.altecprint.ui.screens.LabelScreen
 import com.example.altecprint.ui.screens.PrintLabelScreen
 
 enum class AltecScreen() {
     Labels,
-    PrintLabel
+    PrintLabel,
+    BasProgram
 }
 
 @Composable
@@ -67,12 +69,16 @@ fun AltecApp(
             }
             composable(route = AltecScreen.PrintLabel.name) {
                 PrintLabelScreen(
-                    label = uiState.selectedLabel,
                     amount = uiState.labelAmount,
                     variableData = uiState.variableData,
                     onLabelAmountChange = { viewModel.updateLabelAmount(it) },
                     onPrintButtonClicked = { viewModel.printLabel(uiState.selectedLabel, uiState.labelAmount) },
                     onVariableChange = { key, value -> viewModel.updateLabelVariable(key, value) }
+                )
+            }
+            composable(route = AltecScreen.BasProgram.name) {
+                BasProgramScreen(
+                    onSendButtonClicked = { viewModel.sendBasData(it) }
                 )
             }
         }

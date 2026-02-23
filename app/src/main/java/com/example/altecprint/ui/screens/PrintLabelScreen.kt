@@ -19,7 +19,6 @@ import com.example.altecprint.model.Label
 
 @Composable
 fun PrintLabelScreen(
-    label: Label?,
     amount: String,
     variableData: Map<String, String>,
     onLabelAmountChange: (String) -> Unit,
@@ -27,17 +26,11 @@ fun PrintLabelScreen(
     onPrintButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-
-    //TODO: label preview
-    //TODO: text fields for variable data
+    //TODO: label preview?
 
     Column(
         modifier = modifier
     ) {
-        Text(
-            text = label?.name ?: "no label selected"
-        )
-
         variableData.forEach { (key, value) ->
             OutlinedTextField(
                 value = value,
@@ -77,7 +70,6 @@ fun PrintLabelScreen(
 @Composable
 fun PrintLabelPreview() {
     PrintLabelScreen(
-        label = Label("test", "test"),
         amount = "1",
         variableData = mapOf(),
         onLabelAmountChange = {},

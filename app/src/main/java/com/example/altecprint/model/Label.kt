@@ -19,10 +19,6 @@ class Label(val name: String, val tspl: String) {
         }
     }
 
-    public fun updateVariableData(variableName: String, newValue: String) {
-        variableData[variableName] = newValue
-    }
-
     fun buildFinalTspl(variableData: Map<String, String>): String {
         var result = tspl
 

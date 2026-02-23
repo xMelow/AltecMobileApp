@@ -6,19 +6,13 @@ object DataSource {
 
     val labels = listOf(
         Label(
-            name = "invalid label",
-            tspl =
-                "invalid tspl"
-         ),
-
-        Label(
             name = "User info label",
             tspl = """
                     SIZE 103 mm,110 mm
                     GAP 3 mm,0 mm
                     REFERENCE 0,0
                     SPEED 2.0
-                    DENSITY 8
+                    DENSITY 11
                     SET RIBBON ON
                     SET PEEL OFF
                     SET CUTTER OFF
@@ -53,7 +47,7 @@ object DataSource {
                     GAP 3 mm,0 mm
                     REFERENCE 0,0
                     SPEED 2.0
-                    DENSITY 8
+                    DENSITY 11
                     SET RIBBON ON
                     SET PEEL OFF
                     SET CUTTER OFF
@@ -72,13 +66,13 @@ object DataSource {
                     CODEPAGE 1252
                     TEXT 1073,30,"0",0,10,10,"0"+@0
                     CODEPAGE 1252
-                    TEXT 26,30,"0",0,10,10,"Flor Stellamans"
+                    TEXT 26,30,"0",0,10,10,"!Name"
                     CODEPAGE 1252
-                    TEXT 26,139,"0",0,10,10,"Kerkstraat 55"
+                    TEXT 26,139,"0",0,10,10,"!Street"
                     CODEPAGE 1252
-                    TEXT 26,248,"0",0,12,12,"1851 Humbeek"
-                    BARCODE 33,389,"128M",79,2,0,4,8,"!104+3!0992468294226"
-                    QRCODE 867,218,L,11,A,0,M2,S7,"flor@stellamans.be"
+                    TEXT 26,248,"0",0,12,12,"!Provincie"
+                    BARCODE 33,389,"128M",79,2,0,4,8,"!BARCODE"
+                    QRCODE 867,218,L,11,A,0,M2,S7,"!QRCODE"
                 """.trimIndent()
             )
 
