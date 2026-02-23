@@ -22,9 +22,15 @@ class LabelViewModel : ViewModel() {
         }
     }
 
-    fun printLabel(label: Label?) {
+    fun printLabel(label: Label?, labelAmount: Int) {
         viewModelScope.launch {
-            printManager.printLabel(label)
+            printManager.printLabel(label, labelAmount)
+        }
+    }
+
+    fun updateLabelAmount(labelAmount: Int) {
+        _uiState.update { currentState ->
+            currentState.copy(labelAmount = labelAmount)
         }
     }
 }

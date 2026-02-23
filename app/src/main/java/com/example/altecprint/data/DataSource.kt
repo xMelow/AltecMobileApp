@@ -43,8 +43,7 @@ object DataSource {
                 "TEXT 295,231,\"0\",0,16,16,\"flor\"",
                 "TEXT 509,320,\"0\",0,16,16,\"+32468294226\"",
                 "TEXT 295,410,\"0\",0,16,16,\"flor@altec.be\"",
-                "TEXT 396,502,\"0\",0,16,16,\"Altec\"",
-                "PRINT 1,1"
+                "TEXT 396,502,\"0\",0,16,16,\"Altec\""
             )
         ),
 
@@ -80,8 +79,7 @@ object DataSource {
                 "CODEPAGE 1252",
                 "TEXT 26,248,\"0\",0,12,12,\"1851 Humbeek\"",
                 "BARCODE 33,389,\"128M\",79,2,0,4,8,\"!104+3!0992468294226\"",
-                "QRCODE 867,218,L,11,A,0,M2,S7,\"flor@stellamans.be\"",
-                "PRINT 1,1"
+                "QRCODE 867,218,L,11,A,0,M2,S7,\"flor@stellamans.be\""
             )
         )
     )
