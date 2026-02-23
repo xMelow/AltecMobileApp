@@ -18,7 +18,10 @@ class LabelViewModel : ViewModel() {
 
     fun setLabel(label: Label) {
         _uiState.update { currentState ->
-            currentState.copy(selectedLabel = label)
+            currentState.copy(
+                selectedLabel = label,
+                variableData = label.variableData.toMap()
+            )
         }
     }
 
@@ -28,9 +31,18 @@ class LabelViewModel : ViewModel() {
         }
     }
 
+    fun updateLabelVariable(key: String, value: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                variableData = currentState.variableData + (key to value)
+            )
+        }
+    }
+
     fun printLabel(label: Label?, labelAmount: String) {
         viewModelScope.launch {
-            printManager.printLabel(label, labelAmount.toIntOrNull() ?: 1)
+            var finalTspl = label?.buildFinalTspl(_uiState.value.variableData)
+            printManager.printLabel(finalTspl, labelAmount.toIntOrNull() ?: 1)
         }
     }
 }

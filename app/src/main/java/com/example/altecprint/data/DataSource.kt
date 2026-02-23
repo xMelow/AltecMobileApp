@@ -4,7 +4,7 @@ import com.example.altecprint.model.Label
 
 object DataSource {
 
-    val labels = listOf<Label>(
+    val labels = listOf(
         Label(
             name = "invalid label",
             tspl =
@@ -30,19 +30,19 @@ object DataSource {
                     OFFSET 0 mm
                 
                     CLS
-                    TEXT 427,47,"0",0,16,16,"Hello World"
+                    TEXT 427,47,"0",0,16,16,"!TITLE"
                     BAR 33,135,1199,7
                     BOX 33,178,1232,890,6
-                    QRCODE 938,951,L,14,A,0,M2,S7,"123456789012"
+                    QRCODE 938,951,L,14,A,0,M2,S7,"!QRCODE"
                     CIRCLE 933,590,260,12
                     TEXT 77,234,"0",0,16,16,"Name:"
                     TEXT 77,322,"0",0,16,16,"Phone number:"
                     TEXT 77,413,"0",0,16,16,"Email:"
                     TEXT 77,505,"0",0,16,16,"Company:"
-                    TEXT 295,231,"0",0,16,16,"flor"
-                    TEXT 509,320,"0",0,16,16,"+32468294226"
-                    TEXT 295,410,"0",0,16,16,"flor@altec.be"
-                    TEXT 396,502,"0",0,16,16,"Altec"
+                    TEXT 295,231,"0",0,16,16,"!NAME"
+                    TEXT 509,320,"0",0,16,16,"!PHONENUMBER"
+                    TEXT 295,410,"0",0,16,16,"!EMAIL"
+                    TEXT 396,502,"0",0,16,16,"!COMPANY"
                 """.trimIndent()
             ),
 

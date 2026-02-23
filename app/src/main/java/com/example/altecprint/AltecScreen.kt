@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -68,8 +69,10 @@ fun AltecApp(
                 PrintLabelScreen(
                     label = uiState.selectedLabel,
                     amount = uiState.labelAmount,
+                    variableData = uiState.variableData,
                     onLabelAmountChange = { viewModel.updateLabelAmount(it) },
-                    onPrintButtonClicked = { viewModel.printLabel(uiState.selectedLabel, uiState.labelAmount) }
+                    onPrintButtonClicked = { viewModel.printLabel(uiState.selectedLabel, uiState.labelAmount) },
+                    onVariableChange = { key, value -> viewModel.updateLabelVariable(key, value) }
                 )
             }
         }

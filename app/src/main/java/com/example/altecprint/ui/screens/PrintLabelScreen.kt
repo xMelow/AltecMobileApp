@@ -21,7 +21,9 @@ import com.example.altecprint.model.Label
 fun PrintLabelScreen(
     label: Label?,
     amount: String,
+    variableData: Map<String, String>,
     onLabelAmountChange: (String) -> Unit,
+    onVariableChange: (String, String) -> Unit,
     onPrintButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -35,6 +37,16 @@ fun PrintLabelScreen(
         Text(
             text = label?.name ?: "no label selected"
         )
+
+        variableData.forEach { (key, value) ->
+            OutlinedTextField(
+                value = value,
+                onValueChange = { onVariableChange(key, it) },
+                label = { Text(text = key) },
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -67,7 +79,9 @@ fun PrintLabelPreview() {
     PrintLabelScreen(
         label = Label("test", "test"),
         amount = "1",
+        variableData = mapOf(),
         onLabelAmountChange = {},
-        onPrintButtonClicked = {}
+        onPrintButtonClicked = {},
+        onVariableChange = {} as (String, String) -> Unit
     )
 }
