@@ -7,21 +7,21 @@ import java.net.Socket
 
 class PrinterManager {
 
-    suspend fun printLabel(label: Label?, labelAmount: Int) {
-        var tspl: String? = label?.tspl?.joinToString("\n")
+    suspend fun printLabel(label: Label?, labelAmount: Int?) {
+        var tspl: String? = label?.tspl
 
         tspl += "\nPRINT 1,$labelAmount"
         tspl += "\r\n"; // add new line at the end of tspl
 
-        sendTSPL(tspl)
+        println(tspl)
+
+//        sendTSPL(tspl)  commented out to save labels
     }
 
     suspend fun sendTSPL(tspl: String?): Result<Unit> = withContext(Dispatchers.IO) {
         val printerIP = "192.168.1.123"
 //        val printerHostName = "PRN-Flor"
         val port = 9100
-
-        println(tspl)
 
         try {
             Socket(printerIP, port).use { socket ->

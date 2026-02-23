@@ -5,12 +5,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.altecprint.model.Label
@@ -18,8 +20,8 @@ import com.example.altecprint.model.Label
 @Composable
 fun PrintLabelScreen(
     label: Label?,
-    amount: Int,
-    onLabelAmountChange: (Int) -> Unit,
+    amount: String,
+    onLabelAmountChange: (String) -> Unit,
     onPrintButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -41,9 +43,10 @@ fun PrintLabelScreen(
             verticalAlignment = Alignment.Bottom
         ) {
             OutlinedTextField(
-                value = amount.toString(),
-                onValueChange = { onLabelAmountChange(it.toIntOrNull() ?: 1) },
+                value = amount,
+                onValueChange = { onLabelAmountChange(it) },
                 label = { Text(text = "Label Amount: ") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
             Button(
                 modifier = Modifier.weight(1f),
@@ -62,8 +65,8 @@ fun PrintLabelScreen(
 @Composable
 fun PrintLabelPreview() {
     PrintLabelScreen(
-        label = Label("test", listOf("test")),
-        amount = 1,
+        label = Label("test", "test"),
+        amount = "1",
         onLabelAmountChange = {},
         onPrintButtonClicked = {}
     )

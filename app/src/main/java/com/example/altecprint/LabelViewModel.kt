@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class LabelViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(LabelUiState())
     val uiState: StateFlow<LabelUiState> = _uiState.asStateFlow()
-    val printManager = PrinterManager()
+    private val printManager = PrinterManager()
 
     fun setLabel(label: Label) {
         _uiState.update { currentState ->
@@ -22,15 +22,15 @@ class LabelViewModel : ViewModel() {
         }
     }
 
-    fun printLabel(label: Label?, labelAmount: Int) {
-        viewModelScope.launch {
-            printManager.printLabel(label, labelAmount)
+    fun updateLabelAmount(labelAmount: String) {
+        _uiState.update { currentState ->
+            currentState.copy(labelAmount = labelAmount)
         }
     }
 
-    fun updateLabelAmount(labelAmount: Int) {
-        _uiState.update { currentState ->
-            currentState.copy(labelAmount = labelAmount)
+    fun printLabel(label: Label?, labelAmount: String) {
+        viewModelScope.launch {
+            printManager.printLabel(label, labelAmount.toIntOrNull() ?: 1)
         }
     }
 }

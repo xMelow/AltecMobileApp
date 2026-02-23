@@ -4,5 +4,5 @@ import com.example.altecprint.model.Label
 
 data class LabelUiState (
     val selectedLabel: Label? = null,
-    val labelAmount: Int = 1
+    val labelAmount: String = "1"
 )
