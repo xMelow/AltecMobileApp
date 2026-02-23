@@ -15,17 +15,17 @@ class PrinterManager {
         println(tspl)
 
         // command out to save labels
-        sendTSPL(tspl)
+        sendData(tspl)
     }
 
-    suspend fun sendTSPL(tspl: String?): Result<Unit> = withContext(Dispatchers.IO) {
+    suspend fun sendData(data: String): Result<Unit> = withContext(Dispatchers.IO) {
         val printerIP = "192.168.1.123"
 //        val printerHostName = "PRN-Flor"
         val port = 9100
 
         try {
             Socket(printerIP, port).use { socket ->
-                val data = tspl?.toByteArray(Charsets.US_ASCII)
+                val data = data.toByteArray(Charsets.US_ASCII)
                 socket.getOutputStream().apply {
                     write(data)
                     flush()

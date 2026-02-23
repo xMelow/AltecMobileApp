@@ -41,8 +41,14 @@ class LabelViewModel : ViewModel() {
 
     fun printLabel(label: Label?, labelAmount: String) {
         viewModelScope.launch {
-            var finalTspl = label?.buildFinalTspl(_uiState.value.variableData)
+            val finalTspl = label?.buildFinalTspl(_uiState.value.variableData)
             printManager.printLabel(finalTspl, labelAmount.toIntOrNull() ?: 1)
+        }
+    }
+
+    fun sendBasData(data: String) {
+        viewModelScope.launch {
+            printManager.sendData(data)
         }
     }
 }
