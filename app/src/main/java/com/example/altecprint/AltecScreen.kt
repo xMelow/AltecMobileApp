@@ -114,7 +114,10 @@ fun AltecApp(
                         amount = uiState.labelAmount,
                         variableData = uiState.variableData,
                         onLabelAmountChange = { viewModel.updateLabelAmount(it) },
-                        onPrintButtonClicked = { viewModel.printLabel(uiState.selectedLabel, uiState.labelAmount) },
+                        onPrintButtonClicked = {
+                            viewModel.printLabel(uiState.selectedLabel, uiState.labelAmount)
+                            navController.navigate(AltecScreen.Labels.name)
+                        },
                         onVariableChange = { key, value -> viewModel.updateLabelVariable(key, value) }
                     )
                 }
