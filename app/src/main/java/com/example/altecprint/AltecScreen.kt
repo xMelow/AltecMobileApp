@@ -1,5 +1,6 @@
 package com.example.altecprint
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -33,21 +34,23 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 
 enum class AltecScreen() {
     Labels,
     PrintLabel,
     BasProgram,
-    Settings
+    Printer
 }
 
 enum class AppDestinations(
     val label: String,
     val icon: ImageVector,
 ) {
-    SETTINGS("Settings", Icons.Default.Settings),
+    PRINTER("Printers", Icons.Default.Settings),
     LABEL("label", Icons.Default.Home),
-    BAS("BasProgram", Icons.Default.MailOutline),
+    BAS("Bas Program", Icons.Default.MailOutline),
 }
 
 @Composable
@@ -62,7 +65,7 @@ fun AltecApp(
     val currentDestination = when (currentScreen) {
         AltecScreen.Labels, AltecScreen.PrintLabel -> AppDestinations.LABEL
         AltecScreen.BasProgram -> AppDestinations.BAS
-        AltecScreen.Settings -> AppDestinations.SETTINGS
+        AltecScreen.Printer -> AppDestinations.PRINTER
     }
 
     NavigationSuiteScaffold(
@@ -76,7 +79,7 @@ fun AltecApp(
                         when (it) {
                             AppDestinations.LABEL -> navController.navigate(AltecScreen.Labels.name)
                             AppDestinations.BAS -> navController.navigate(AltecScreen.BasProgram.name)
-                            AppDestinations.SETTINGS -> navController.navigate(AltecScreen.Settings.name)
+                            AppDestinations.PRINTER -> navController.navigate(AltecScreen.Printer.name)
                         }
                     }
                 )
@@ -87,8 +90,6 @@ fun AltecApp(
             topBar = {
                 AltecAppBar(
                     currentScreen = currentScreen,
-                    canNavigateBack = navController.previousBackStackEntry != null,
-                    navigateUp = { navController.navigateUp() }
                 )
             }
         ) { innerPadding ->
@@ -119,11 +120,15 @@ fun AltecApp(
                 }
                 composable(route = AltecScreen.BasProgram.name) {
                     BasProgramScreen(
-                        onSendButtonClicked = { viewModel.sendBasData(it) }
+                        onSendButtonClicked = { viewModel.sendBasData(it) },
+                        onExitButtonClicked = {
+                            viewModel.exitBasProgram()
+                            navController.navigate(AltecScreen.Labels.name)
+                        }
                     )
                 }
-                composable(route = AltecScreen.Settings.name) {
-                    Text("Settings coming soon")
+                composable(route = AltecScreen.Printer.name) {
+                    Text("Printers coming soon")
                 }
             }
         }
@@ -134,25 +139,18 @@ fun AltecApp(
 @Composable
 fun AltecAppBar(
     currentScreen: AltecScreen,
-    canNavigateBack: Boolean,
-    navigateUp: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     TopAppBar(
-        title = { Text(currentScreen.name) }, // change to string resource
-        colors = TopAppBarDefaults.mediumTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
+        title = {
+            Text(
+                text = currentScreen.name, // change to string resource
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+            ) },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
         ),
         modifier = modifier,
-        navigationIcon = {
-            if (canNavigateBack) {
-                IconButton(onClick = navigateUp) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back"
-                    )
-                }
-            }
-        }
     )
 }

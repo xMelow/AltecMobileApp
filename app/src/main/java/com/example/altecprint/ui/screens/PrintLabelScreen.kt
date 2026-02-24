@@ -3,6 +3,7 @@ package com.example.altecprint.ui.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
@@ -29,7 +30,7 @@ fun PrintLabelScreen(
     //TODO: label preview?
 
     Column(
-        modifier = modifier
+        modifier = Modifier.padding(16.dp)
     ) {
         variableData.forEach { (key, value) ->
             OutlinedTextField(
@@ -40,10 +41,11 @@ fun PrintLabelScreen(
             )
         }
 
+        Spacer(modifier = Modifier.weight(1f))
+
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(15.dp),
             verticalAlignment = Alignment.Bottom
         ) {
@@ -51,7 +53,8 @@ fun PrintLabelScreen(
                 value = amount,
                 onValueChange = { onLabelAmountChange(it) },
                 label = { Text(text = "Label Amount: ") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                modifier = Modifier.weight(1f)
             )
             Button(
                 modifier = Modifier.weight(1f),

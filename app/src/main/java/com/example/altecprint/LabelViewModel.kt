@@ -48,7 +48,13 @@ class LabelViewModel : ViewModel() {
 
     fun sendBasData(data: String) {
         viewModelScope.launch {
-            printManager.sendData(data)
+            printManager.sendBasData(data)
+        }
+    }
+
+    fun exitBasProgram() {
+        viewModelScope.launch {
+            printManager.sendBasData("EXIT")
         }
     }
 }

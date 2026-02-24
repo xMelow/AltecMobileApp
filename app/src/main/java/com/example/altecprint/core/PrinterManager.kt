@@ -18,6 +18,12 @@ class PrinterManager {
         sendData(tspl)
     }
 
+    suspend fun sendBasData(data: String) {
+        var dataToSend = data
+        dataToSend += "\r\n";
+        sendData(dataToSend)
+    }
+
     suspend fun sendData(data: String): Result<Unit> = withContext(Dispatchers.IO) {
         val printerIP = "192.168.1.123"
 //        val printerHostName = "PRN-Flor"
