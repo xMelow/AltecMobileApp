@@ -2,6 +2,7 @@ package com.example.altecprint
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.altecprint.core.PrinterManager
 import com.example.altecprint.data.LabelUiState
 import com.example.altecprint.model.Label
@@ -66,6 +67,12 @@ class LabelViewModel : ViewModel() {
                 selectedLabel = updatedLabel,
                 variableData = updatedLabel?.variableData ?: emptyMap()
             )
+        }
+    }
+
+    fun connectToPrinter(ipOrHostname: String, port: Int) {
+        viewModelScope.launch {
+            printManager.connectToPrinter(ipOrHostname, port)
         }
     }
 }

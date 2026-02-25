@@ -6,15 +6,15 @@ import java.net.Socket
 
 class PrinterManager {
 
+    var printerIpOrHostname = "192.168.1.123"
+    var printerPort = 9100
+
     suspend fun printLabel(finalTspl: String?, labelAmount: Int?) {
         var tspl = finalTspl
 
         tspl += "\nPRINT 1,$labelAmount"
-        tspl += "\r\n"; // add new line at the end of tspl
+        tspl += "\r\n";
 
-        println(tspl)
-
-        // command out to save labels
         sendData(tspl)
     }
 
@@ -25,12 +25,8 @@ class PrinterManager {
     }
 
     suspend fun sendData(data: String): Result<Unit> = withContext(Dispatchers.IO) {
-        val printerIP = "192.168.1.123"
-//        val printerHostName = "PRN-Flor"
-        val port = 9100
-
         try {
-            Socket(printerIP, port).use { socket ->
+            Socket(printerIpOrHostname, printerPort).use { socket ->
                 val data = data.toByteArray(Charsets.US_ASCII)
                 socket.getOutputStream().apply {
                     write(data)
@@ -42,5 +38,10 @@ class PrinterManager {
             println(e)
             Result.failure(e)
         }
+    }
+
+    fun connectToPrinter(ipOrHostname: String, port: Int) {
+        printerIpOrHostname = ipOrHostname
+        printerPort = port
     }
 }

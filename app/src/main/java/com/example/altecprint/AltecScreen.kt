@@ -112,10 +112,7 @@ fun AltecApp(
                         amount = uiState.labelAmount,
                         variableData = uiState.variableData,
                         onLabelAmountChange = { viewModel.updateLabelAmount(it) },
-                        onPrintButtonClicked = {
-                            viewModel.printLabel(uiState.selectedLabel, uiState.labelAmount)
-                            navController.navigate(AltecScreen.Labels.name)
-                        },
+                        onPrintButtonClicked = { viewModel.printLabel(uiState.selectedLabel, uiState.labelAmount) },
                         onVariableChange = { key, value -> viewModel.updateLabelVariable(key, value) },
                         onEditButtonClicked = {
                             navController.navigate(AltecScreen.EditLabel.name)
@@ -133,7 +130,9 @@ fun AltecApp(
                 }
                 composable(route = AltecScreen.Printer.name) {
                     PrinterScreen(
-
+                        onConnectClick = { ipOrHost, port -> viewModel.connectToPrinter(ipOrHost, port)},
+                        printerPort = 9100,
+                        printerIpOrHost = "",
                     )
                 }
                 composable(route = AltecScreen.EditLabel.name) {
