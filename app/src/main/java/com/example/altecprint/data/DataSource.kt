@@ -4,6 +4,8 @@ import com.example.altecprint.model.Label
 
 object DataSource {
 
+//    val printers = listOf<>()
+
     val labels = listOf(
         Label(
             name = "User info label",

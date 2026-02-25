@@ -1,9 +1,14 @@
 package com.example.altecprint.ui.screens
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,23 +21,43 @@ import com.example.altecprint.model.Label
 @Composable
 fun LabelScreen(
     labels: List<Label>,
+    onAddButtonClick: () -> Unit,
     onLabelClick: (Label) -> Unit,
     modifier: Modifier = Modifier
     ) {
-    LazyColumn(
-        modifier = modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+
+    Column(
+        modifier = modifier
     ) {
-        items(labels) { label ->
-            LabelCard(
-                label = label,
-                onLabelClick = onLabelClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
-            )
+        LazyColumn(
+            modifier = modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            items(labels) { label ->
+                LabelCard(
+                    label = label,
+                    onLabelClick = onLabelClick,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.End
+        ) {
+            Button(
+                onClick = onAddButtonClick,
+            ) {
+                Text(text = "+")
+            }
         }
     }
+
 }
 
 @Composable

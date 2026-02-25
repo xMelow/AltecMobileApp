@@ -1,8 +1,7 @@
-package com.example.altecprint
+package com.example.altecprint.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.altecprint.core.PrinterManager
 import com.example.altecprint.data.LabelUiState
 import com.example.altecprint.model.Label

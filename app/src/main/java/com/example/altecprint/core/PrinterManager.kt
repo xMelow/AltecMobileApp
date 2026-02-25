@@ -43,5 +43,7 @@ class PrinterManager {
     fun connectToPrinter(ipOrHostname: String, port: Int) {
         printerIpOrHostname = ipOrHostname
         printerPort = port
+        // send ping or test the connection of the printer is found
+
     }
 }

@@ -32,11 +32,13 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.text.style.TextAlign
 import com.example.altecprint.ui.screens.EditLabelScreen
 import com.example.altecprint.ui.screens.PrinterScreen
+import com.example.altecprint.ui.viewmodel.LabelViewModel
 
 enum class AltecScreen() {
     Labels,
     PrintLabel,
     EditLabel,
+    AddLabel,
     BasProgram,
     Printer
 }
@@ -101,6 +103,7 @@ fun AltecApp(
                 composable(route = AltecScreen.Labels.name) {
                     LabelScreen(
                         labels = DataSource.labels,
+                        onAddButtonClick = { navController.navigate(AltecScreen.AddLabel.name) },
                         onLabelClick = {
                             viewModel.setLabel(it)
                             navController.navigate(AltecScreen.PrintLabel.name)
@@ -130,9 +133,9 @@ fun AltecApp(
                 }
                 composable(route = AltecScreen.Printer.name) {
                     PrinterScreen(
+                        printerPort = uiState.printerPort,
+                        printerIpOrHost = uiState.printerIpOrHostname,
                         onConnectClick = { ipOrHost, port -> viewModel.connectToPrinter(ipOrHost, port)},
-                        printerPort = 9100,
-                        printerIpOrHost = "",
                     )
                 }
                 composable(route = AltecScreen.EditLabel.name) {
