@@ -6,7 +6,7 @@ object DataSource {
 
 //    val printers = listOf<>()
 
-    val labels = listOf(
+    val labels = mutableListOf(
         Label(
             name = "User info label",
             tspl = """

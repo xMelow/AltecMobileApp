@@ -30,6 +30,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.text.style.TextAlign
+import com.example.altecprint.ui.screens.AddLabelScreen
 import com.example.altecprint.ui.screens.EditLabelScreen
 import com.example.altecprint.ui.screens.PrinterScreen
 import com.example.altecprint.ui.viewmodel.LabelViewModel
@@ -102,7 +103,7 @@ fun AltecApp(
             ) {
                 composable(route = AltecScreen.Labels.name) {
                     LabelScreen(
-                        labels = DataSource.labels,
+                        labels = uiState.labels,
                         onAddButtonClick = { navController.navigate(AltecScreen.AddLabel.name) },
                         onLabelClick = {
                             viewModel.setLabel(it)
@@ -145,6 +146,12 @@ fun AltecApp(
                             viewModel.saveLabelTspl(it)
                             navController.navigate(AltecScreen.PrintLabel.name)
                         },
+                    )
+                }
+                composable(route = AltecScreen.AddLabel.name) {
+                    AddLabelScreen(
+                        onAddButtonClicked = {name, tspl -> viewModel.addLabel(name, tspl) },
+                        onCancelButtonClicked = { navController.navigate(AltecScreen.Labels.name) }
                     )
                 }
             }

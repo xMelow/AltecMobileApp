@@ -25,6 +25,16 @@ class LabelViewModel : ViewModel() {
         }
     }
 
+    fun addLabel(name: String, tspl: String) {
+        _uiState.update { currentState ->
+            var labelsWithAddedLabel = currentState.labels
+            labelsWithAddedLabel.add(Label(name, tspl))
+            currentState.copy(
+                labels = labelsWithAddedLabel
+            )
+        }
+    }
+
     fun updateLabelAmount(labelAmount: String) {
         _uiState.update { currentState ->
             currentState.copy(labelAmount = labelAmount)
