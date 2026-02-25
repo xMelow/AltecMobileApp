@@ -2,7 +2,7 @@ package com.example.altecprint.model
 
 import androidx.compose.ui.input.key.Key
 
-class Label(val name: String, val tspl: String) {
+data class Label(val name: String, var tspl: String) {
     val variableData: MutableMap<String, String> = mutableMapOf()
 
     init {
@@ -10,6 +10,7 @@ class Label(val name: String, val tspl: String) {
     }
 
     fun populateVariableDataMap() {
+        variableData.clear()
         val regex = Regex("!([A-Za-z0-9_]+)")
         tspl.lines().forEach { line ->
             regex.findAll(line).forEach { match ->
@@ -26,6 +27,10 @@ class Label(val name: String, val tspl: String) {
             result = result.replace("!${key}", value)
         }
         return result
+    }
+
+    fun updateTspl(newTspl: String): Label {
+        return Label(name, newTspl)
     }
 
 }

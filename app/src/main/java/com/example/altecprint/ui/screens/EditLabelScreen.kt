@@ -11,6 +11,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.altecprint.model.Label
@@ -18,24 +22,24 @@ import com.example.altecprint.model.Label
 @Composable
 fun EditLabelScreen(
     label: Label?,
-    onSaveButtonClick: () -> Unit,
+    onSaveButtonClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var tspl by remember(label) { mutableStateOf(label?.tspl ?: "") }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        label?.tspl?.let {
-            OutlinedTextField(
-                value = it,
-                onValueChange = { },
-                label = { Text(text = "TSPL") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(6f)
-            )
-        }
+        OutlinedTextField(
+            value = tspl,
+            onValueChange = { tspl = it },
+            label = { Text(text = "TSPL") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(6f)
+        )
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -44,7 +48,7 @@ fun EditLabelScreen(
             horizontalArrangement = Arrangement.End
         ) {
             Button(
-                onClick = onSaveButtonClick,
+                onClick = { onSaveButtonClick(tspl ?: "") },
             ) {
                 Text(text = "Save")
             }

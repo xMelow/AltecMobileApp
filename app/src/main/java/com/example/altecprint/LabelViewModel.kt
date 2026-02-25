@@ -57,4 +57,15 @@ class LabelViewModel : ViewModel() {
             printManager.sendBasData("EXIT")
         }
     }
+
+    fun saveLabelTspl(tspl: String) {
+        _uiState.update { currentState ->
+            val updatedLabel = currentState.selectedLabel?.updateTspl(tspl)
+            updatedLabel?.populateVariableDataMap()
+            currentState.copy(
+                selectedLabel = updatedLabel,
+                variableData = updatedLabel?.variableData ?: emptyMap()
+            )
+        }
+    }
 }

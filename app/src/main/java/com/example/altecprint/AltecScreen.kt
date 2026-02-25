@@ -139,7 +139,10 @@ fun AltecApp(
                 composable(route = AltecScreen.EditLabel.name) {
                     EditLabelScreen(
                         label = uiState.selectedLabel,
-                        onSaveButtonClick = {},
+                        onSaveButtonClick = {
+                            viewModel.saveLabelTspl(it)
+                            navController.navigate(AltecScreen.PrintLabel.name)
+                        },
                     )
                 }
             }
