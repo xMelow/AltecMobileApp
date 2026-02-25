@@ -24,6 +24,7 @@ fun PrintLabelScreen(
     variableData: Map<String, String>,
     onLabelAmountChange: (String) -> Unit,
     onVariableChange: (String, String) -> Unit,
+    onEditButtonClicked: () -> Unit,
     onPrintButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -39,6 +40,16 @@ fun PrintLabelScreen(
                 label = { Text(text = key) },
                 modifier = Modifier.fillMaxWidth()
             )
+        }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.End
+        ) {
+            Button(
+                onClick = onEditButtonClicked
+            ) {
+                Text(text = "Edit TSPL")
+            }
         }
 
         Spacer(modifier = Modifier.weight(1f))
@@ -77,6 +88,7 @@ fun PrintLabelPreview() {
         variableData = mapOf(),
         onLabelAmountChange = {},
         onPrintButtonClicked = {},
+        onEditButtonClicked = {},
         onVariableChange = {} as (String, String) -> Unit
     )
 }

@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -15,9 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -30,16 +26,17 @@ import com.example.altecprint.ui.screens.BasProgramScreen
 import com.example.altecprint.ui.screens.LabelScreen
 import com.example.altecprint.ui.screens.PrintLabelScreen
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import com.example.altecprint.ui.screens.EditLabelScreen
+import com.example.altecprint.ui.screens.PrinterScreen
 
 enum class AltecScreen() {
     Labels,
     PrintLabel,
+    EditLabel,
     BasProgram,
     Printer
 }
@@ -66,6 +63,7 @@ fun AltecApp(
         AltecScreen.Labels, AltecScreen.PrintLabel -> AppDestinations.LABEL
         AltecScreen.BasProgram -> AppDestinations.BAS
         AltecScreen.Printer -> AppDestinations.PRINTER
+        else -> AppDestinations.LABEL
     }
 
     NavigationSuiteScaffold(
@@ -118,7 +116,10 @@ fun AltecApp(
                             viewModel.printLabel(uiState.selectedLabel, uiState.labelAmount)
                             navController.navigate(AltecScreen.Labels.name)
                         },
-                        onVariableChange = { key, value -> viewModel.updateLabelVariable(key, value) }
+                        onVariableChange = { key, value -> viewModel.updateLabelVariable(key, value) },
+                        onEditButtonClicked = {
+                            navController.navigate(AltecScreen.EditLabel.name)
+                        }
                     )
                 }
                 composable(route = AltecScreen.BasProgram.name) {
@@ -131,7 +132,15 @@ fun AltecApp(
                     )
                 }
                 composable(route = AltecScreen.Printer.name) {
-                    Text("Printers coming soon")
+                    PrinterScreen(
+
+                    )
+                }
+                composable(route = AltecScreen.EditLabel.name) {
+                    EditLabelScreen(
+                        label = uiState.selectedLabel,
+                        onSaveButtonClick = {},
+                    )
                 }
             }
         }
