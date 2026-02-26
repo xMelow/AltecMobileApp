@@ -1,6 +1,8 @@
 package com.example.altecprint.ui.screens
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -40,13 +42,21 @@ fun PrinterConnectScreen(
             onValueChange = { port = it },
             label = { Text(text = "Port") },
             modifier = Modifier
+                .padding(top = 16.dp)
                 .fillMaxWidth()
         )
 
-        Button(
-            onClick = { onConnectClick(ipOrHost, port.toIntOrNull() ?: 9100) }
+        Row(
+            horizontalArrangement = Arrangement.End,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
         ) {
-            Text(text = "Connect")
+            Button(
+                onClick = { onConnectClick(ipOrHost, port.toIntOrNull() ?: 9100) }
+            ) {
+                Text(text = "Connect")
+            }
         }
     }
 
