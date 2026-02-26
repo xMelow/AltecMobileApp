@@ -16,8 +16,8 @@ import kotlin.collections.component2
 
 @Composable
 fun PrinterSettingsScreen(
-    printerSettings: Map<String, String>,
-    onSettingChanged: (String, String) -> Unit,
+    printerSettings: Map<String, List<String>>,
+    onSettingChanged: () -> Unit,
     onConnectButtonClicked: () -> Unit,
     onSaveButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
@@ -25,24 +25,30 @@ fun PrinterSettingsScreen(
     Column(
         modifier = modifier
     ) {
-        Row(
-            modifier = Modifier
-                .padding(16.dp)
-        ) {
-            printerSettings.forEach { (key, value) ->
-                OutlinedTextField(
-                    value = value,
-                    onValueChange = { onSettingChanged(key, it) },
-                    label = { Text(text = key) },
+        printerSettings.forEach { (key, value) ->
+            Row(
+                modifier = Modifier
+            ) {
+                Text(
+                    text = key,
                     modifier = Modifier.fillMaxWidth()
                 )
+
+                value.forEach { param ->
+                    OutlinedTextField(
+                        value = param,
+                        onValueChange = { },
+                        label = { Text(text = param) },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
         }
 
         Spacer(modifier = Modifier)
 
         Row(
-
+            modifier = Modifier,
         ) {
             Button(
                 onClick = {}

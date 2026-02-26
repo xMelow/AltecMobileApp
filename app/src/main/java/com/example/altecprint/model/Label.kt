@@ -23,8 +23,12 @@ data class Label(val name: String, var tspl: String) {
     }
 
     fun populatePrinterSettingsMap() {
-        tspl.lines().forEach { line ->
-            if (line.isEmpty()) return@forEach
+        //TODO: split function
+       for (line in tspl.lines()) {
+            val trimmed = line.trim()
+
+            if (trimmed.isEmpty()) continue
+            if (trimmed == "CLS") break
 
             val parts = line.trim().split("\\s+".toRegex())
 
@@ -38,7 +42,7 @@ data class Label(val name: String, var tspl: String) {
                 commandName = parts[0]
                 params = parts.drop(1).joinToString(" ").split(",")
             } else {
-                return@forEach
+                continue
             }
 
             printerSettings[commandName] = params

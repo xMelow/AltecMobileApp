@@ -33,6 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import com.example.altecprint.ui.screens.AddLabelScreen
 import com.example.altecprint.ui.screens.EditLabelScreen
 import com.example.altecprint.ui.screens.PrinterConnectScreen
+import com.example.altecprint.ui.screens.PrinterSettingsScreen
 import com.example.altecprint.ui.viewmodel.LabelViewModel
 
 enum class AltecScreen() {
@@ -41,7 +42,8 @@ enum class AltecScreen() {
     EditLabel,
     AddLabel,
     BasProgram,
-    Printer
+    Printer,
+    PrinterSettings,
 }
 
 enum class AppDestinations(
@@ -80,7 +82,7 @@ fun AltecApp(
                         when (it) {
                             AppDestinations.LABEL -> navController.navigate(AltecScreen.Labels.name)
                             AppDestinations.BAS -> navController.navigate(AltecScreen.BasProgram.name)
-                            AppDestinations.PRINTER -> navController.navigate(AltecScreen.Printer.name)
+                            AppDestinations.PRINTER -> navController.navigate(AltecScreen.PrinterSettings.name)
                         }
                     }
                 )
@@ -112,6 +114,7 @@ fun AltecApp(
                     )
                 }
                 composable(route = AltecScreen.PrintLabel.name) {
+                    println(uiState.variableData)
                     PrintLabelScreen(
                         amount = uiState.labelAmount,
                         variableData = uiState.variableData,
@@ -150,8 +153,17 @@ fun AltecApp(
                 }
                 composable(route = AltecScreen.AddLabel.name) {
                     AddLabelScreen(
-                        onAddButtonClicked = {name, tspl -> viewModel.addLabel(name, tspl) },
+                        onAddButtonClicked = { name, tspl -> viewModel.addLabel(name, tspl) },
                         onCancelButtonClicked = { navController.navigate(AltecScreen.Labels.name) }
+                    )
+                }
+                composable(route = AltecScreen.PrinterSettings.name) {
+                    println(uiState.printerSettings)
+                    PrinterSettingsScreen(
+                        printerSettings = uiState.printerSettings,
+                        onSettingChanged = { },
+                        onConnectButtonClicked = { },
+                        onSaveButtonClicked = { },
                     )
                 }
             }

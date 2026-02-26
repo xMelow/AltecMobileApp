@@ -20,7 +20,8 @@ class LabelViewModel : ViewModel() {
         _uiState.update { currentState ->
             currentState.copy(
                 selectedLabel = label,
-                variableData = label.variableData.toMap()
+                variableData = label.variableData.toMap(),
+                printerSettings = label.printerSettings.toMap()
             )
         }
     }

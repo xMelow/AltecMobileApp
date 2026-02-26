@@ -5,7 +5,6 @@ import kotlinx.coroutines.withContext
 import java.net.Socket
 
 class PrinterManager {
-
     var printerIpOrHostname = "192.168.1.123"
     var printerPort = 9100
 
