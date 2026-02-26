@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -31,7 +33,9 @@ fun PrintLabelScreen(
     //TODO: label preview?
 
     Column(
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp)
     ) {
         variableData.forEach { (key, value) ->
             OutlinedTextField(

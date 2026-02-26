@@ -23,22 +23,22 @@ fun PrinterConnectScreen(
     onConnectClick: (String, Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var ipOrHost by remember { mutableStateOf("") }
-    var port by remember { mutableStateOf("") }
+    var ipOrHost by remember { mutableStateOf(printerIpOrHost) }
+    var port by remember { mutableStateOf(printerPort.toString()) }
 
     Column(
         modifier = Modifier
             .padding(16.dp)
     ) {
         OutlinedTextField(
-            value = printerIpOrHost,
+            value = ipOrHost,
             onValueChange = { ipOrHost = it },
             label = { Text(text = "IP or Hostname") },
             modifier = Modifier
                 .fillMaxWidth()
         )
         OutlinedTextField(
-            value = printerPort.toString(),
+            value = port,
             onValueChange = { port = it },
             label = { Text(text = "Port") },
             modifier = Modifier
