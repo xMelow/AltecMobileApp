@@ -77,7 +77,6 @@ fun PrintLabelScreen(
             }
         }
     }
-
 }
 
 @Preview

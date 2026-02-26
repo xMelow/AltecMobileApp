@@ -34,6 +34,7 @@ fun AddLabelScreen(
             modifier = Modifier
                 .fillMaxWidth()
         )
+
         OutlinedTextField(
             value = tspl,
             onValueChange = { tspl = it },
@@ -49,15 +50,15 @@ fun AddLabelScreen(
             horizontalArrangement = Arrangement.End
         ) {
             Button(
-                onClick = { onAddButtonClicked(name, tspl) },
-            ) {
-                Text(text = "Add")
-            }
-
-            Button(
                 onClick = onCancelButtonClicked,
             ) {
                 Text(text = "Cancel")
+            }
+
+            Button(
+                onClick = { onAddButtonClicked(name, tspl) },
+            ) {
+                Text(text = "Add")
             }
         }
     }
