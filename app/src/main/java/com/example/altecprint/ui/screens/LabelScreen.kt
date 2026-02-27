@@ -30,7 +30,6 @@ fun LabelScreen(
 
     Column(
         modifier = modifier
-            .verticalScroll(rememberScrollState())
     ) {
         LazyColumn(
             modifier = modifier.fillMaxWidth(),

@@ -6,6 +6,23 @@ object DataSource {
 
 //    val printers = listOf<>()
 
+    val defaultPrinterSettings: MutableMap<String, List<String>> = mutableMapOf(
+        "SIZE" to listOf("103 mm", "110 mm"),
+        "GAP" to listOf("3 mm", "0 mm"),
+        "REFERENCE" to listOf("0", "0"),
+        "SPEED" to listOf("2.0"),
+        "DENSITY" to listOf("8"),
+        "SET RIBBON" to listOf("ON"),
+        "SET PEEL" to listOf("OFF"),
+        "SET CUTTER" to listOf("OFF"),
+        "SET PARTIAL_CUTTER" to listOf("OFF"),
+        "SET TEAR" to listOf("ON"),
+        "SET REWIND" to listOf("OFF"),
+        "DIRECTION" to listOf("0", "0"),
+        "SHIFT" to listOf("0", "0"),
+        "OFFSET" to listOf("0 mm")
+    )
+
     val labels = mutableListOf(
         Label(
             name = "User info label",
