@@ -67,7 +67,7 @@ fun AltecApp(
     val currentDestination = when (currentScreen) {
         AltecScreen.Labels, AltecScreen.PrintLabel -> AppDestinations.LABEL
         AltecScreen.BasProgram -> AppDestinations.BAS
-        AltecScreen.PrinterSettings -> AppDestinations.PRINTER
+        AltecScreen.PrinterSettings, AltecScreen.Printer -> AppDestinations.PRINTER
         else -> AppDestinations.LABEL
     }
 
@@ -164,10 +164,13 @@ fun AltecApp(
                     println(uiState.printerSettings)
                     PrinterSettingsScreen(
                         printerSettings = uiState.printerSettings,
-                        onSettingChanged = {  }, // update setting
+                        onSettingChanged = { key, param ->
+                            viewModel.updateLabelPrintSetting(key, param)
+                        },
                         onConnectButtonClicked = { navController.navigate(AltecScreen.Printer.name) },
-                        onSaveButtonClicked = {
+                        onSaveButtonClicked = { printSettings ->
                             // save settings in label
+                            viewModel.updateLabelPrintSettings(printSettings)
                             navController.navigate(AltecScreen.Labels.name)
                         },
                     )

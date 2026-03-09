@@ -50,6 +50,34 @@ class LabelViewModel : ViewModel() {
         }
     }
 
+    fun saveLabelTspl(tspl: String) {
+        _uiState.update { currentState ->
+            val updatedLabel = currentState.selectedLabel?.updateTspl(tspl)
+            updatedLabel?.populateVariableDataMap()
+            currentState.copy(
+                selectedLabel = updatedLabel,
+                variableData = updatedLabel?.variableData ?: emptyMap()
+            )
+        }
+    }
+
+    fun updateLabelPrintSettings(newPrinterSettings: Map<String, List<String>> ) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                printerSettings = newPrinterSettings
+            )
+        }
+    }
+
+    fun updateLabelPrintSetting(key: String, param: String) {
+        _uiState.update { currentState ->
+            // find key value par update map
+            currentState.copy(
+                printerSettings = (currentState.printerSettings + (key to param)) as Map<String, List<String>>
+            )
+        }
+    }
+
     fun printLabel(label: Label?, labelAmount: String) {
         viewModelScope.launch {
             val finalTspl = label?.buildFinalTspl(_uiState.value.variableData)
@@ -66,17 +94,6 @@ class LabelViewModel : ViewModel() {
     fun exitBasProgram() {
         viewModelScope.launch {
             printManager.sendBasData("EXIT")
-        }
-    }
-
-    fun saveLabelTspl(tspl: String) {
-        _uiState.update { currentState ->
-            val updatedLabel = currentState.selectedLabel?.updateTspl(tspl)
-            updatedLabel?.populateVariableDataMap()
-            currentState.copy(
-                selectedLabel = updatedLabel,
-                variableData = updatedLabel?.variableData ?: emptyMap()
-            )
         }
     }
 

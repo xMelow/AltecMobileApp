@@ -13,6 +13,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.LineHeightStyle
@@ -23,13 +27,16 @@ import kotlin.collections.component2
 @Composable
 fun PrinterSettingsScreen(
     printerSettings: Map<String, List<String>>,
-    onSettingChanged: () -> Unit,
+    onSettingChanged: (String, String) -> Unit,
     onConnectButtonClicked: () -> Unit,
-    onSaveButtonClicked: () -> Unit,
+    onSaveButtonClicked: (Map<String, List<String>>) -> Unit,
     modifier: Modifier = Modifier
 ) {
     //TODO: Remove mm from input fields
     //TODO: On off change to dropdown
+
+    var newPrinterSettings by remember { mutableStateOf(printerSettings) }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -46,12 +53,16 @@ fun PrinterSettingsScreen(
                     modifier = Modifier.weight(1f)
                 )
 
-                value.forEach { param ->
+                value.forEachIndexed { index, param ->
                     OutlinedTextField(
                         value = param,
-                        onValueChange = { onSettingChanged() },
-                        label = { Text(text = key) },
-                        modifier = Modifier.fillMaxWidth(0.5f)
+                        onValueChange = {
+                            val updatedParamList = value.toMutableList().also { list -> list[index] = it }
+                            newPrinterSettings = newPrinterSettings + (key to updatedParamList)
+                        },
+                        label = { },
+                        modifier = Modifier
+                            .fillMaxWidth(0.5f)
                             .padding(4.dp)
                     )
                 }
@@ -64,10 +75,10 @@ fun PrinterSettingsScreen(
             modifier = Modifier,
         ) {
             Button(onClick = onConnectButtonClicked) {
-                Text(text = "Connect to printer")
+                Text(text = "Connect to other printer")
             }
 
-            Button(onClick = onSaveButtonClicked) {
+            Button(onClick = { onSaveButtonClicked(newPrinterSettings) }) {
                 Text(text = "Save")
             }
         }
