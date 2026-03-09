@@ -69,15 +69,6 @@ class LabelViewModel : ViewModel() {
         }
     }
 
-    fun updateLabelPrintSetting(key: String, param: String) {
-        _uiState.update { currentState ->
-            // find key value par update map
-            currentState.copy(
-                printerSettings = (currentState.printerSettings + (key to param)) as Map<String, List<String>>
-            )
-        }
-    }
-
     fun printLabel(label: Label?, labelAmount: String) {
         viewModelScope.launch {
             val finalTspl = label?.buildFinalTspl(_uiState.value.variableData)

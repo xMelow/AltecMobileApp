@@ -27,7 +27,6 @@ import kotlin.collections.component2
 @Composable
 fun PrinterSettingsScreen(
     printerSettings: Map<String, List<String>>,
-    onSettingChanged: (String, String) -> Unit,
     onConnectButtonClicked: () -> Unit,
     onSaveButtonClicked: (Map<String, List<String>>) -> Unit,
     modifier: Modifier = Modifier

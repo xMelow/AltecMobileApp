@@ -161,15 +161,10 @@ fun AltecApp(
                     )
                 }
                 composable(route = AltecScreen.PrinterSettings.name) {
-                    println(uiState.printerSettings)
                     PrinterSettingsScreen(
                         printerSettings = uiState.printerSettings,
-                        onSettingChanged = { key, param ->
-                            viewModel.updateLabelPrintSetting(key, param)
-                        },
                         onConnectButtonClicked = { navController.navigate(AltecScreen.Printer.name) },
                         onSaveButtonClicked = { printSettings ->
-                            // save settings in label
                             viewModel.updateLabelPrintSettings(printSettings)
                             navController.navigate(AltecScreen.Labels.name)
                         },
