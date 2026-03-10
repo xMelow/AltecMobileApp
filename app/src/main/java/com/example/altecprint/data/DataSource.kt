@@ -4,8 +4,6 @@ import com.example.altecprint.model.Label
 
 object DataSource {
 
-//    val printers = listOf<>()
-
     val defaultPrinterSettings: MutableMap<String, List<String>> = mutableMapOf(
         "SIZE" to listOf("103 mm", "110 mm"),
         "GAP" to listOf("3 mm", "0 mm"),

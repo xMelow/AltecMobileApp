@@ -3,8 +3,10 @@ package com.example.altecprint.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.altecprint.core.PrinterManager
+import com.example.altecprint.data.DataSource
 import com.example.altecprint.data.LabelUiState
 import com.example.altecprint.model.Label
+import com.example.altecprint.util.TsplParser
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,13 +18,16 @@ class LabelViewModel : ViewModel() {
     val uiState: StateFlow<LabelUiState> = _uiState.asStateFlow()
     private val printManager = PrinterManager()
 
+    init {
+        _uiState.update { it.copy(labels = DataSource.labels) }
+    }
 
-    fun setLabel(label: Label) {
+    fun selectLabel(label: Label) {
         _uiState.update { currentState ->
             currentState.copy(
                 selectedLabel = label,
-                variableData = label.variableData.toMap(),
-                printerSettings = label.printerSettings.toMap()
+                variableData = TsplParser.parseVariableData(label.tspl),
+                printerSettings = TsplParser.parsePrinterSettings(label.tspl)
             )
         }
     }
@@ -43,7 +48,7 @@ class LabelViewModel : ViewModel() {
         }
     }
 
-    fun updateLabelVariable(key: String, value: String) {
+    fun updateLabelVariableData(key: String, value: String) {
         _uiState.update { currentState ->
             currentState.copy(
                 variableData = currentState.variableData + (key to value)
@@ -53,11 +58,11 @@ class LabelViewModel : ViewModel() {
 
     fun saveLabelTspl(tspl: String) {
         _uiState.update { currentState ->
-            val updatedLabel = currentState.selectedLabel?.updateTspl(tspl)
-            updatedLabel?.populateVariableDataMap()
+            val updatedLabel = currentState.selectedLabel.updateTspl(tspl)
+            updatedLabel.populateVariableDataMap()
             currentState.copy(
                 selectedLabel = updatedLabel,
-                variableData = updatedLabel?.variableData ?: emptyMap()
+                variableData = updatedLabel.variableData
             )
         }
     }
