@@ -56,31 +56,26 @@ class LabelViewModel : ViewModel() {
         }
     }
 
-    fun saveLabelTspl(tspl: String) {
+    fun saveLabelTspl(newTspl: String) {
         _uiState.update { currentState ->
-            val updatedLabel = currentState.selectedLabel.updateTspl(tspl)
-            updatedLabel.populateVariableDataMap()
+            val updatedLabel = currentState.selectedLabel.copy(tspl = newTspl)
             currentState.copy(
                 selectedLabel = updatedLabel,
-                variableData = updatedLabel.variableData
+                variableData = TsplParser.parseVariableData(newTspl),
+                printerSettings = TsplParser.parsePrinterSettings(newTspl)
             )
         }
     }
 
-    fun updateLabelPrintSettings(newPrinterSettings: Map<String, List<String>> ) {
-        _uiState.update { currentState ->
-            // update the label print settings
-//            val currentLabel = currentState.selectedLabel
-//            currentLabel.updatePrintSettings(newPrinterSettings)
-            currentState.copy(
-                printerSettings = newPrinterSettings
-            )
+    fun updatePrinterSettings(newSettings: Map<String, List<String>>) {
+        _uiState.update {
+            it.copy(printerSettings = newSettings)
         }
     }
 
-    fun printLabel(label: Label?, labelAmount: String) {
+    fun printLabel(label: Label, labelAmount: String) {
         viewModelScope.launch {
-            val finalTspl = label?.buildFinalTspl(_uiState.value.variableData)
+            val finalTspl = TsplParser.buildFinalTspl(label.tspl, _uiState.value.variableData)
             printManager.printLabel(finalTspl, labelAmount.toIntOrNull() ?: 1)
         }
     }

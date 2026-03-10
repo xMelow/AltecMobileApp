@@ -111,7 +111,7 @@ fun AltecApp(
                         labels = labelUiState.labels,
                         onAddButtonClick = { navController.navigate(AltecScreen.AddLabel.name) },
                         onLabelClick = {
-                            labelViewModel.setLabel(it)
+                            labelViewModel.selectLabel(it)
                             navController.navigate(AltecScreen.PrintLabel.name)
                         }
                     )
@@ -122,7 +122,7 @@ fun AltecApp(
                         variableData = labelUiState.variableData,
                         onLabelAmountChange = { labelViewModel.updateLabelAmount(it) },
                         onPrintButtonClicked = { labelViewModel.printLabel(labelUiState.selectedLabel, labelUiState.labelAmount) },
-                        onVariableChange = { key, value -> labelViewModel.updateLabelVariable(key, value) },
+                        onVariableChange = { key, value -> labelViewModel.updateLabelVariableData(key, value) },
                         onEditButtonClicked = {
                             navController.navigate(AltecScreen.EditLabel.name)
                         }
@@ -167,7 +167,7 @@ fun AltecApp(
                         printerSettings = labelUiState.printerSettings,
                         onConnectButtonClicked = { navController.navigate(AltecScreen.Printer.name) },
                         onSaveButtonClicked = { printSettings ->
-                            labelViewModel.updateLabelPrintSettings(printSettings)
+                            labelViewModel.updatePrinterSettings(printSettings)
                             navController.navigate(AltecScreen.Labels.name)
                         },
                     )
