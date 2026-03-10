@@ -1,5 +1,6 @@
 package com.example.altecprint.ui.screens
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -70,7 +71,9 @@ fun PrinterSettingsScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Row(
-            modifier = Modifier,
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.End
         ) {
             Button(onClick = { onSaveButtonClicked(newPrinterSettings) }) {
                 Text(text = "Save")
