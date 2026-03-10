@@ -84,7 +84,7 @@ fun AltecApp(
                         when (it) {
                             AppDestinations.LABEL -> navController.navigate(AltecScreen.Labels.name)
                             AppDestinations.BAS -> navController.navigate(AltecScreen.BasProgram.name)
-                            AppDestinations.PRINTER -> navController.navigate(AltecScreen.PrinterSettings.name)
+                            AppDestinations.PRINTER -> navController.navigate(AltecScreen.Printer.name)
                         }
                     }
                 )
@@ -123,6 +123,7 @@ fun AltecApp(
                         onLabelAmountChange = { labelViewModel.updateLabelAmount(it) },
                         onPrintButtonClicked = { labelViewModel.printLabel(labelUiState.selectedLabel, labelUiState.labelAmount) },
                         onVariableChange = { key, value -> labelViewModel.updateLabelVariableData(key, value) },
+                        onPrintSettingsButtonClicked = { navController.navigate(AltecScreen.PrinterSettings.name)},
                         onEditButtonClicked = {
                             navController.navigate(AltecScreen.EditLabel.name)
                         }
@@ -165,10 +166,9 @@ fun AltecApp(
                 composable(route = AltecScreen.PrinterSettings.name) {
                     PrinterSettingsScreen(
                         printerSettings = labelUiState.printerSettings,
-                        onConnectButtonClicked = { navController.navigate(AltecScreen.Printer.name) },
                         onSaveButtonClicked = { printSettings ->
                             labelViewModel.updatePrinterSettings(printSettings)
-                            navController.navigate(AltecScreen.Labels.name)
+                            navController.navigate(AltecScreen.PrintLabel.name)
                         },
                     )
                 }

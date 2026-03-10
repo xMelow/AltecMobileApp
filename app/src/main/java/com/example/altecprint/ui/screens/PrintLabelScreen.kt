@@ -27,6 +27,7 @@ fun PrintLabelScreen(
     onLabelAmountChange: (String) -> Unit,
     onVariableChange: (String, String) -> Unit,
     onEditButtonClicked: () -> Unit,
+    onPrintSettingsButtonClicked: () -> Unit,
     onPrintButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -49,6 +50,12 @@ fun PrintLabelScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End
         ) {
+            Button(
+                onClick = onPrintSettingsButtonClicked
+            ) {
+                Text(text = "Edit Print Settings")
+            }
+
             Button(
                 onClick = onEditButtonClicked
             ) {
@@ -92,6 +99,7 @@ fun PrintLabelPreview() {
         onLabelAmountChange = {},
         onPrintButtonClicked = {},
         onEditButtonClicked = {},
+        onPrintSettingsButtonClicked = {},
         onVariableChange = {} as (String, String) -> Unit
     )
 }
