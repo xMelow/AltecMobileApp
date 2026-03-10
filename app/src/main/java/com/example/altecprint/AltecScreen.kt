@@ -98,7 +98,8 @@ fun AltecApp(
                 )
             }
         ) { innerPadding ->
-            val uiState by labelViewModel.uiState.collectAsState()
+            val labelUiState by labelViewModel.uiState.collectAsState()
+            val printerUiState by printerViewModel.uiState.collectAsState()
 
             NavHost(
                 navController = navController,
@@ -107,7 +108,7 @@ fun AltecApp(
             ) {
                 composable(route = AltecScreen.Labels.name) {
                     LabelScreen(
-                        labels = uiState.labels,
+                        labels = labelUiState.labels,
                         onAddButtonClick = { navController.navigate(AltecScreen.AddLabel.name) },
                         onLabelClick = {
                             labelViewModel.setLabel(it)
@@ -117,10 +118,10 @@ fun AltecApp(
                 }
                 composable(route = AltecScreen.PrintLabel.name) {
                     PrintLabelScreen(
-                        amount = uiState.labelAmount,
-                        variableData = uiState.variableData,
+                        amount = labelUiState.labelAmount,
+                        variableData = labelUiState.variableData,
                         onLabelAmountChange = { labelViewModel.updateLabelAmount(it) },
-                        onPrintButtonClicked = { printerViewModel.printLabel(uiState.selectedLabel, uiState.labelAmount) },
+                        onPrintButtonClicked = { labelViewModel.printLabel(labelUiState.selectedLabel, labelUiState.labelAmount) },
                         onVariableChange = { key, value -> labelViewModel.updateLabelVariable(key, value) },
                         onEditButtonClicked = {
                             navController.navigate(AltecScreen.EditLabel.name)
@@ -138,8 +139,8 @@ fun AltecApp(
                 }
                 composable(route = AltecScreen.Printer.name) {
                     PrinterConnectScreen(
-                        printerPort = uiState.printerPort,
-                        printerIpOrHost = uiState.printerIpOrHostname,
+                        printerPort = printerUiState.printerPort,
+                        printerIpOrHost = printerUiState.printerIpOrHostname,
                         onConnectClick = { ipOrHost, port ->
                             printerViewModel.connectToPrinter(ipOrHost, port)
                             navController.navigate(AltecScreen.PrinterSettings.name)
@@ -148,7 +149,7 @@ fun AltecApp(
                 }
                 composable(route = AltecScreen.EditLabel.name) {
                     EditLabelScreen(
-                        label = uiState.selectedLabel,
+                        label = labelUiState.selectedLabel,
                         onSaveButtonClick = {
                             labelViewModel.saveLabelTspl(it)
                             navController.navigate(AltecScreen.PrintLabel.name)
@@ -163,7 +164,7 @@ fun AltecApp(
                 }
                 composable(route = AltecScreen.PrinterSettings.name) {
                     PrinterSettingsScreen(
-                        printerSettings = uiState.printerSettings,
+                        printerSettings = labelUiState.printerSettings,
                         onConnectButtonClicked = { navController.navigate(AltecScreen.Printer.name) },
                         onSaveButtonClicked = { printSettings ->
                             labelViewModel.updateLabelPrintSettings(printSettings)

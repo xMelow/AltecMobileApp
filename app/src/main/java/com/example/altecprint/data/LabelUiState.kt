@@ -4,11 +4,8 @@ import com.example.altecprint.model.Label
 
 data class LabelUiState (
     val labels: MutableList<Label> = DataSource.labels,
-    val selectedLabel: Label? = null,
+    val selectedLabel: Label,
     val labelAmount: String = "1",
-
-    val variableData: Map<String, String> = emptyMap(),
-    val printerSettings: Map<String, List<String>> = DataSource.defaultPrinterSettings,
-
-
+    val variableData: Map<String, String>,
+    val printerSettings: Map<String, List<String>>,
 )

@@ -29,7 +29,7 @@ class LabelViewModel : ViewModel() {
 
     fun addLabel(name: String, tspl: String) {
         _uiState.update { currentState ->
-            var labelsWithAddedLabel = currentState.labels
+            val labelsWithAddedLabel = currentState.labels
             labelsWithAddedLabel.add(Label(name, tspl))
             currentState.copy(
                 labels = labelsWithAddedLabel
@@ -75,7 +75,7 @@ class LabelViewModel : ViewModel() {
 
     fun printLabel(label: Label?, labelAmount: String) {
         viewModelScope.launch {
-            val finalTspl = label?.buildFinalTspl(uiState.value.variableData)
+            val finalTspl = label?.buildFinalTspl(_uiState.value.variableData)
             printManager.printLabel(finalTspl, labelAmount.toIntOrNull() ?: 1)
         }
     }
