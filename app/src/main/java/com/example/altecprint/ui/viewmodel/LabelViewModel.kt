@@ -16,6 +16,7 @@ class LabelViewModel : ViewModel() {
     val uiState: StateFlow<LabelUiState> = _uiState.asStateFlow()
     private val printManager = PrinterManager()
 
+
     fun setLabel(label: Label) {
         _uiState.update { currentState ->
             currentState.copy(
@@ -63,6 +64,9 @@ class LabelViewModel : ViewModel() {
 
     fun updateLabelPrintSettings(newPrinterSettings: Map<String, List<String>> ) {
         _uiState.update { currentState ->
+            // update the label print settings
+//            val currentLabel = currentState.selectedLabel
+//            currentLabel.updatePrintSettings(newPrinterSettings)
             currentState.copy(
                 printerSettings = newPrinterSettings
             )
@@ -71,26 +75,10 @@ class LabelViewModel : ViewModel() {
 
     fun printLabel(label: Label?, labelAmount: String) {
         viewModelScope.launch {
-            val finalTspl = label?.buildFinalTspl(_uiState.value.variableData)
+            val finalTspl = label?.buildFinalTspl(uiState.value.variableData)
             printManager.printLabel(finalTspl, labelAmount.toIntOrNull() ?: 1)
         }
     }
 
-    fun sendBasData(data: String) {
-        viewModelScope.launch {
-            printManager.sendBasData(data)
-        }
-    }
 
-    fun exitBasProgram() {
-        viewModelScope.launch {
-            printManager.sendBasData("EXIT")
-        }
-    }
-
-    fun connectToPrinter(ipOrHostname: String, port: Int) {
-        viewModelScope.launch {
-            printManager.connectToPrinter(ipOrHostname, port)
-        }
-    }
 }

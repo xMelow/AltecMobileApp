@@ -42,7 +42,7 @@ fun PrinterSettingsScreen(
             .verticalScroll(rememberScrollState())
             .padding(16.dp)
     ) {
-        printerSettings.forEach { (key, value) ->
+        newPrinterSettings.forEach { (key, value) ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically

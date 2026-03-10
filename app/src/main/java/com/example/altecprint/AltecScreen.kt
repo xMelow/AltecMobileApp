@@ -35,6 +35,7 @@ import com.example.altecprint.ui.screens.EditLabelScreen
 import com.example.altecprint.ui.screens.PrinterConnectScreen
 import com.example.altecprint.ui.screens.PrinterSettingsScreen
 import com.example.altecprint.ui.viewmodel.LabelViewModel
+import com.example.altecprint.ui.viewmodel.PrinterViewModel
 
 enum class AltecScreen() {
     Labels,
@@ -57,7 +58,8 @@ enum class AppDestinations(
 
 @Composable
 fun AltecApp(
-    viewModel: LabelViewModel = viewModel(),
+    labelViewModel: LabelViewModel = viewModel(),
+    printerViewModel: PrinterViewModel = viewModel(),
     navController: NavHostController = rememberNavController()
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
@@ -96,7 +98,7 @@ fun AltecApp(
                 )
             }
         ) { innerPadding ->
-            val uiState by viewModel.uiState.collectAsState()
+            val uiState by labelViewModel.uiState.collectAsState()
 
             NavHost(
                 navController = navController,
@@ -108,19 +110,18 @@ fun AltecApp(
                         labels = uiState.labels,
                         onAddButtonClick = { navController.navigate(AltecScreen.AddLabel.name) },
                         onLabelClick = {
-                            viewModel.setLabel(it)
+                            labelViewModel.setLabel(it)
                             navController.navigate(AltecScreen.PrintLabel.name)
                         }
                     )
                 }
                 composable(route = AltecScreen.PrintLabel.name) {
-                    println(uiState.variableData)
                     PrintLabelScreen(
                         amount = uiState.labelAmount,
                         variableData = uiState.variableData,
-                        onLabelAmountChange = { viewModel.updateLabelAmount(it) },
-                        onPrintButtonClicked = { viewModel.printLabel(uiState.selectedLabel, uiState.labelAmount) },
-                        onVariableChange = { key, value -> viewModel.updateLabelVariable(key, value) },
+                        onLabelAmountChange = { labelViewModel.updateLabelAmount(it) },
+                        onPrintButtonClicked = { printerViewModel.printLabel(uiState.selectedLabel, uiState.labelAmount) },
+                        onVariableChange = { key, value -> labelViewModel.updateLabelVariable(key, value) },
                         onEditButtonClicked = {
                             navController.navigate(AltecScreen.EditLabel.name)
                         }
@@ -128,9 +129,9 @@ fun AltecApp(
                 }
                 composable(route = AltecScreen.BasProgram.name) {
                     BasProgramScreen(
-                        onSendButtonClicked = { viewModel.sendBasData(it) },
+                        onSendButtonClicked = { printerViewModel.sendBasData(it) },
                         onExitButtonClicked = {
-                            viewModel.exitBasProgram()
+                            printerViewModel.exitBasProgram()
                             navController.navigate(AltecScreen.Labels.name)
                         }
                     )
@@ -140,7 +141,7 @@ fun AltecApp(
                         printerPort = uiState.printerPort,
                         printerIpOrHost = uiState.printerIpOrHostname,
                         onConnectClick = { ipOrHost, port ->
-                            viewModel.connectToPrinter(ipOrHost, port)
+                            printerViewModel.connectToPrinter(ipOrHost, port)
                             navController.navigate(AltecScreen.PrinterSettings.name)
                         },
                     )
@@ -149,14 +150,14 @@ fun AltecApp(
                     EditLabelScreen(
                         label = uiState.selectedLabel,
                         onSaveButtonClick = {
-                            viewModel.saveLabelTspl(it)
+                            labelViewModel.saveLabelTspl(it)
                             navController.navigate(AltecScreen.PrintLabel.name)
                         },
                     )
                 }
                 composable(route = AltecScreen.AddLabel.name) {
                     AddLabelScreen(
-                        onAddButtonClicked = { name, tspl -> viewModel.addLabel(name, tspl) },
+                        onAddButtonClicked = { name, tspl -> labelViewModel.addLabel(name, tspl) },
                         onCancelButtonClicked = { navController.navigate(AltecScreen.Labels.name) }
                     )
                 }
@@ -165,7 +166,7 @@ fun AltecApp(
                         printerSettings = uiState.printerSettings,
                         onConnectButtonClicked = { navController.navigate(AltecScreen.Printer.name) },
                         onSaveButtonClicked = { printSettings ->
-                            viewModel.updateLabelPrintSettings(printSettings)
+                            labelViewModel.updateLabelPrintSettings(printSettings)
                             navController.navigate(AltecScreen.Labels.name)
                         },
                     )
